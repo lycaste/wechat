@@ -51,9 +51,7 @@ def wechat():
 			return reply
 		content = xml.find('Content').text
 		msgId = xml.find('MsgId').text
-		print('aaaaa',type(content).__name__)
-		print('aaaaa',content)
-		print('aaaaa',content[::-1])
+
 		reply = '''
 	                <xml>
 	                <ToUserName><![CDATA[%s]]></ToUserName>
@@ -62,7 +60,7 @@ def wechat():
 	                <MsgType><![CDATA[%s]]></MsgType>
 	                <Content><![CDATA[%s]]></Content>
 	                </xml>
-	                ''' % (fromUserName, toUserName, createTime, msgType, content)
+	                ''' % (fromUserName, toUserName, createTime, msgType, content[::-1])
 		return reply
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=80)
