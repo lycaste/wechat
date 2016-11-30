@@ -60,6 +60,8 @@ def wechat():
 			tree = etree.HTML(r.text)
 			contentlist = tree.xpath('//div[@class="content"]/span/text()')
 			joke = contentlist[randint(0, len(contentlist))]
+			filter(joke,len(joke)<50)
+
 		if len(joke) == 0:
 			joke = content
 
