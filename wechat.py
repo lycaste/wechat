@@ -17,7 +17,7 @@ def wechat():
 		s.sort()
 
 		m = hashlib.sha1()
-		m.update(repr(list).encode('utf-8'))
+		m.update(repr(s).encode('utf-8'))
 		hashcode = m.hexdigest()
 
 		print(hashcode)
