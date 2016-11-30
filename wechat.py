@@ -1,6 +1,7 @@
 from flask import Flask, request, make_response
-from config import Config
 import hashlib
+import xml.etree.cElementTree as ET
+
 app = Flask(__name__)
 
 @app.route('/', methods=['POST','GET'])
@@ -24,7 +25,48 @@ def wechat():
 			print("echostr",echostr)
 			return make_response(echostr)
 
-
+	if request.method == 'POST':
+		xml_str = request.stream.read()
+		xml = ET.fromstring(xml_str)
+		toUserName = xml.find('ToUserName').text
+		fromUserName = xml.find('FromUserName').text
+		createTime = xml.find('CreateTime').text
+		msgType = xml.find('MsgType').text
+		if msgType != 'text':
+			reply = '''
+	            <xml>
+	            <ToUserName><![CDATA[%s]]></ToUserName>
+	            <FromUserName><![CDATA[%s]]></FromUserName>
+	            <CreateTime>%s</CreateTime>
+	            <MsgType><![CDATA[%s]]></MsgType>
+	            <Content><![CDATA[%s]]></Content>
+	            </xml>
+	            ''' % (
+				fromUserName,
+				toUserName,
+				createTime,
+				'text',
+				'Unknow Format, Please check out'
+			)
+			return reply
+		content = xml.find('Content').text
+		msgId = xml.find('MsgId').text
+		if type(content).__name__ == "unicode":
+			content = content[::-1]
+			content = content.encode('UTF-8')
+		elif type(content).__name__ == "str":
+			content = content.decode('utf-8')
+			content = content[::-1]
+		reply = '''
+	                <xml>
+	                <ToUserName><![CDATA[%s]]></ToUserName>
+	                <FromUserName><![CDATA[%s]]></FromUserName>
+	                <CreateTime>%s</CreateTime>
+	                <MsgType><![CDATA[%s]]></MsgType>
+	                <Content><![CDATA[%s]]></Content>
+	                </xml>
+	                ''' % (fromUserName, toUserName, createTime, msgType, content)
+		return reply
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=80)
 
