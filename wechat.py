@@ -51,6 +51,10 @@ def wechat():
 			return reply
 		content = xml.find('Content').text
 		msgId = xml.find('MsgId').text
+		print('aaaaa',type(content).__name__)
+		print('aaaaa',content)
+		print('aaaaa',content[::-1])
+
 		if type(content).__name__ == "unicode":
 			content = content[::-1]
 			content = content.encode('UTF-8')
