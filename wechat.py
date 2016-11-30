@@ -8,16 +8,23 @@ def wechat():
 	if request.method == 'GET':
 		print("receive Get")
 		data = request.args
-		toekn = Config.WECHAT_TOKEN
+		toekn = 'wechat_token'
 		signature = data.get('signature','')
 		timestamp = data.get('timestamp','')
 		nonce = data.get('nonce','')
 		echostr = data.get('echostr','')
 		s = [timestamp, nonce, toekn]
 		s.sort()
-		s = ''.join(s)
-		print(hashlib.sha1(s.encode('utf-8')).hexdigest())
+
+		m = hashlib.sha1()
+		m.update(list)
+		hashcode = m.hexdigest()
+
+		print(hashcode)
 		print(signature)
+
+
+
 		if (hashlib.sha1(s.encode('utf-8')).hexdigest() == signature):
 			make_response(echostr)
 
