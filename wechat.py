@@ -15,8 +15,9 @@ def wechat():
 		echostr = data.get('echostr','')
 		s = [timestamp, nonce, toekn]
 		s.sort()
-
+		s=''.join(s)
 		m = hashlib.sha1()
+		print(s)
 		m.update(s.encode('utf-8'))
 		hashcode = m.hexdigest()
 
