@@ -27,4 +27,4 @@
 import werobot
 
 robot = werobot.WeRoBot(token='wechat_token')
-robot.run()
+robot.run(host='0.0.0.0',port=80)
