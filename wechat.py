@@ -3,7 +3,7 @@ import hashlib
 import xml.etree.cElementTree as ET
 import requests
 from random import randint
-from xml import etree
+from lxml import etree
 
 app = Flask(__name__)
 
@@ -54,12 +54,12 @@ def wechat():
 			return reply
 		content = xml.find('Content').text
 		msgId = xml.find('MsgId').text
+		if u'笑话' in content:
+			r = requests.get("http://www.qiushibaike.com/text/")
+			tree = etree.HTML(r.text)
+			contentlist = tree.xpath('//div[@class="content"]/span/text()')
 
-		r = requests.get("http://www.qiushibaike.com/text/")
-		tree = etree.HTML(r.text)
-		contentlist = tree.xpath('//div[@class="content"]/span/text()')
 		joke = contentlist[randint(0, len(contentlist))]
-
 		reply = '''
 	                <xml>
 	                <ToUserName><![CDATA[%s]]></ToUserName>
