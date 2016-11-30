@@ -54,6 +54,7 @@ def wechat():
 			return reply
 		content = xml.find('Content').text
 		msgId = xml.find('MsgId').text
+		joke = ""
 		if u'笑话' in content:
 			r = requests.get("http://www.qiushibaike.com/text/")
 			tree = etree.HTML(r.text)
@@ -61,7 +62,7 @@ def wechat():
 			joke = contentlist[randint(0, len(contentlist))]
 		if len(joke) == 0:
 			joke = content
-			
+
 		reply = '''
 	                <xml>
 	                <ToUserName><![CDATA[%s]]></ToUserName>
