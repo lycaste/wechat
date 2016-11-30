@@ -54,13 +54,6 @@ def wechat():
 		print('aaaaa',type(content).__name__)
 		print('aaaaa',content)
 		print('aaaaa',content[::-1])
-
-		if type(content).__name__ == "unicode":
-			content = content[::-1]
-			content = content.encode('UTF-8')
-		elif type(content).__name__ == "str":
-			content = content.decode('utf-8')
-			content = content[::-1]
 		reply = '''
 	                <xml>
 	                <ToUserName><![CDATA[%s]]></ToUserName>
