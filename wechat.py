@@ -58,8 +58,10 @@ def wechat():
 			r = requests.get("http://www.qiushibaike.com/text/")
 			tree = etree.HTML(r.text)
 			contentlist = tree.xpath('//div[@class="content"]/span/text()')
-
-		joke = contentlist[randint(0, len(contentlist))]
+			joke = contentlist[randint(0, len(contentlist))]
+		if len(joke) == 0:
+			joke = content
+			
 		reply = '''
 	                <xml>
 	                <ToUserName><![CDATA[%s]]></ToUserName>
