@@ -55,7 +55,7 @@ def wechat():
 		content = xml.find('Content').text
 		msgId = xml.find('MsgId').text
 		joke = ""
-		if u'笑话' in content:
+		if u'嗯' in content:
 			r = requests.get("http://www.qiushibaike.com/text/")
 			tree = etree.HTML(r.text)
 			contentlist = tree.xpath('//div[@class="content"]/span/text()')
