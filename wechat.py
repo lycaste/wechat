@@ -21,6 +21,7 @@ def wechat():
 		m.update(s.encode('utf-8'))
 		hashcode = m.hexdigest()
 		if (hashcode == signature):
+			print("true")
 			make_response(echostr)
 
 
