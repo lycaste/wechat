@@ -16,7 +16,7 @@ def wechat():
 		s = [timestamp, nonce, toekn]
 		s.sort()
 		s = ''.join(s)
-		if (hashlib.sha1(s).hexdigest() == signature):
+		if (hashlib.sha1(s.encode('utf-8')).hexdigest() == signature):
 			make_response(echostr)
 
 
